@@ -13,4 +13,8 @@ public class FilmeService{
 		return dao.findAll();
 	}
 	
+	public Filme findById(Long id) {
+		return dao.findById(id);
+	}
+	
 }
