@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.fiap.filmesAPI.model.Filme;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -16,23 +17,22 @@ public class FilmeResource{
 	
 	private FilmeService service = new FilmeService();
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Filme> listAll(){
-		return service.findAll();
-	}
+	 @GET
+	    @Produces(MediaType.APPLICATION_JSON)
+	    public List<Filme> listAll() {
+	        return service.findAll(); 
+	    }
+	    
 	
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") Long id) {
-		var filme = service.findById(id);
-		
-		if (filme == null) {
-			return Response.status(404).build();
-		}
-		
-		return Response.ok(filme).build();
-	}
+	  @POST
+	    @Produces(MediaType.APPLICATION_JSON)
+	    public Response cadastrar(Filme filme){
+	    	if (!service.save(filme)) {
+	    		return Response.status(Response.Status.BAD_REQUEST).build();
+	    	}
+	    	
+	    	return Response.ok(filme).build();
+	    	
+	    }
 }
 
